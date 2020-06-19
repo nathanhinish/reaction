@@ -1,6 +1,6 @@
 import pkg from "../package.json";
 import i18n from "./i18n/index.js";
-// import mutations from "./mutations/index.js";
+import mutations from "./mutations/index.js";
 import queries from "./queries/index.js";
 import policies from "./policies.json";
 import resolvers from "./resolvers/index.js";
@@ -34,7 +34,7 @@ export default async function register(app) {
       resolvers,
       schemas
     },
-    // mutations,
+    mutations,
     queries,
     policies,
     simpleSchemas: {

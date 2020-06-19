@@ -35,5 +35,8 @@
   "navigation": "@reactioncommerce/api-plugin-navigation",
   "sitemapGenerator": "@reactioncommerce/api-plugin-sitemap-generator",
   "notifications": "@reactioncommerce/api-plugin-notifications",
-  "addressValidationTest": "@reactioncommerce/api-plugin-address-validation-test"
+  "addressValidationTest": "@reactioncommerce/api-plugin-address-validation-test",
+
+  "paymentsPaypal": "./src/plugins/payments-paypal/src/index.js",
+  "wishlists": "./src/plugins/wishlists/src/index.js"
 }

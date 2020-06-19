@@ -2,12 +2,12 @@ import decodeOpaqueIdForNamespace from "@reactioncommerce/api-utils/decodeOpaque
 import encodeOpaqueId from "@reactioncommerce/api-utils/encodeOpaqueId.js";
 
 const namespaces = {
-  Wishlist: "reaction/wishlist",
-  WishlistItem: "reaction/wishlist-item"
+  Wishlist: "givelist/wishlist",
+  WishlistEntry: "givelist/wishlist-entry"
 };
 
 export const encodeWishlistOpaqueId = encodeOpaqueId(namespaces.Wishlist);
-export const encodeWishlistItemOpaqueId = encodeOpaqueId(namespaces.WishlistItem);
+export const encodeWishlistEntryOpaqueId = encodeOpaqueId(namespaces.WishlistEntry);
 
 export const decodeWishlistOpaqueId = decodeOpaqueIdForNamespace(namespaces.Wishlist);
-export const decodeWishlistItemOpaqueId = decodeOpaqueIdForNamespace(namespaces.WishlistItem);
+export const decodeWishlistEntryOpaqueId = decodeOpaqueIdForNamespace(namespaces.WishlistEntry);

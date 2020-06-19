@@ -25,6 +25,7 @@ type Wishlist implements Node {
   entries: [WishlistEntry]!
   account: Account
   name: String
+  permalink: String
   description: String
   isVisible: Boolean!
   createdAt: DateTime!
