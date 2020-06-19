@@ -1,0 +1,113 @@
+enum WishlistEntryPriority {
+  HIGHEST
+  HIGH
+  MEDIUM
+  LOW
+  LOWEST
+}
+
+type WishlistEntry implements Node {
+  _id: ID!
+  wishlist: Wishlist
+  product: Product
+  variant: CatalogProductVariant
+  comment: String
+  priority: WishlistEntryPriority
+  quantityDesired: Int
+  quantityReceived: Int
+  createdAt: DateTime!
+  updatedAt: DateTime
+  isArchived: Boolean!
+}
+
+type Wishlist implements Node {
+  _id: ID!
+  entries: [WishlistEntry]!
+  account: Account
+  name: String
+  description: String
+  isVisible: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  isArchived: Boolean!
+}
+
+type WishlistConfiguration {
+  wishlistId: ID!
+}
+
+enum WishlistSortByField {
+  _id
+  createdAt
+  name
+  updatedAt
+}
+
+type WishlistEdge {
+  cursor: ConnectionCursor!
+  node: Wishlist
+}
+
+type WishlistConnection {
+  edges: [WishlistEdge]
+  nodes: [Wishlist]
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input ArchiveWishlistsInput {
+  wishlistIds: [ID]!
+}
+
+type ArchiveWishlistsPayload {
+  "The same string you sent with the mutation params, for matching mutation calls with their responses"
+  clientMutationId: String
+
+  "Array of newly archived wishlists"
+  wishlists: [Wishlist]!
+}
+
+extend type Query {
+  wishlist(wishlistId: ID!): Wishlist
+
+  wishlists(
+    isArchived: Boolean
+
+    isVisible: Boolean
+
+    "List of wishlist IDs to filter by"
+    wishlistIds: [ID]
+
+    "Regex metch query string"
+    query: String
+
+    "Return only results that come after this cursor. Use this with `first` to specify the number of results to return."
+    after: ConnectionCursor,
+
+    "Return only results that come before this cursor. Use this with `last` to specify the number of results to return."
+    before: ConnectionCursor,
+
+    "Return at most this many results. This parameter may be used with either `after` or `offset` parameters."
+    first: ConnectionLimitInt,
+
+    "Return at most this many results. This parameter may be used with the `before` parameter."
+    last: ConnectionLimitInt,
+
+    "Return only results that come after the Nth result. This parameter may be used with the `first` parameter."
+    offset: Int,
+
+    "Return results sorted in this order"
+    sortOrder: SortOrder = desc,
+
+    "By default, wishlists are sorted by createdAt. Set this to sort by one of the other allowed fields"
+    sortBy: WishlistSortByField = createdAt
+  ): WishlistConnection
+}
+
+extend type Mutation {
+  "Archive wishlists"
+  archiveWishlists(
+    "Mutation input"
+    input: ArchiveWishlistsInput!
+  ): ArchiveWishlistsPayload!
+}
