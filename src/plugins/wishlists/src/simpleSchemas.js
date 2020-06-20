@@ -7,16 +7,25 @@ export const WishlistEntry = new SimpleSchema({
     label: "Wishlist entry ID",
   },
 
-  comment: String,
+  comment: {
+    type: String,
+    optional: true,
+  },
 
   priority: {
     type: String,
     allowedValues: ["HIGHEST", "HIGH", "MEDIUM", "LOW", "LOWEST"],
   },
-  quantityDesired: Number,
+  quantityDesired: {
+    type: Number,
+    optional: true,
+  },
   quantityReceived: Number,
   createdAt: Date,
-  updatedAt: Date,
+  updatedAt: {
+    type: Date,
+    optional: true,
+  },
   isArchived: Boolean,
 });
 
@@ -27,13 +36,23 @@ export const Wishlist = new SimpleSchema({
   },
 
   entries: [WishlistEntry],
-  account: Account,
+  account: { type: Account, optional: true },
 
   createdAt: Date,
-  updatedAt: Date,
+  updatedAt: {
+    type: Date,
+    optional: true,
+  },
 
   name: String,
-  description: String,
+  permalink: {
+    type: String,
+    optional: true,
+  },
+  description: {
+    type: String,
+    optional: true,
+  },
   isArchived: Boolean,
   isVisible: Boolean,
 });

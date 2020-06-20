@@ -34,8 +34,7 @@ export default function applyWishlistFilters(context, wishlistFilters) {
 
   // Init default selector - Everyone can see wishlists that fit this selector
   let selector = {
-    ancestors: [], // Lookup top-level wishlists
-    isDeleted: { $ne: true }, // by default, we don't publish deleted wishlists
+    isArchived: { $ne: true }, // by default, we don't publish deleted wishlists
   };
 
   if (wishlistFilters) {
@@ -75,7 +74,7 @@ export default function applyWishlistFilters(context, wishlistFilters) {
     if (wishlistFilters.isArchived !== undefined) {
       selector = {
         ...selector,
-        isDeleted: wishlistFilters.isArchived,
+        isArchived: wishlistFilters.isArchived,
       };
     }
   } // end if wishlistFilters

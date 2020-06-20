@@ -8,7 +8,7 @@ const inputSchema = new SimpleSchema({
     type: Object,
     blackbox: true,
     optional: true
-  }
+  },
 });
 
 export default async function createWishlist(context, input) {
@@ -23,31 +23,26 @@ export default async function createWishlist(context, input) {
 
   const initialWishlistData = await cleanWishlistInput(context, {
     wishlistId: newWishlistId,
-    wishlistInput
+    wishlistInput,
   });
 
-  if (initialWishlistData.isDeleted) {
-    throw new ReactionError("invalid-param", "Creating a deleted wishlist is not allowed");
+  if (initialWishlistData.isArchived) {
+    throw new ReactionError("invalid-param", "Creating an archived wishlist is not allowed");
   }
 
   const createdAt = new Date();
   const newWishlist = {
     _id: newWishlistId,
-    ancestors: [],
+    entries: [],
+
     createdAt,
-    handle: "",
-    isDeleted: false,
+    isArchived: false,
     isVisible: false,
-    shopId,
-    shouldAppearInSitemap: true,
-    supportedFulfillmentTypes: ["shipping"],
-    title: "",
-    type: "simple",
-    updatedAt: createdAt,
-    workflow: {
-      status: "new"
-    },
-    ...initialWishlistData
+
+    name: `Wishlist ${newWishlistId}`,
+    description: "",
+    permalink: `wishlist-${newWishlistId}`,
+    ...initialWishlistData,
   };
 
   // Apply custom transformations from plugins.
@@ -62,14 +57,6 @@ export default async function createWishlist(context, input) {
   Wishlist.validate(newWishlist);
 
   await Wishlists.insertOne(newWishlist);
-
-  // Create one initial wishlist variant for it
-  if (shouldCreateFirstVariant) {
-    await context.mutations.createWishlistVariant(context.getInternalContext(), {
-      wishlistId: newWishlistId,
-      shopId
-    });
-  }
 
   await appEvents.emit("afterWishlistCreate", { wishlist: newWishlist });
 

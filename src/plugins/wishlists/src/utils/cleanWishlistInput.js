@@ -1,28 +1,13 @@
 import getSlug from "@reactioncommerce/api-utils/getSlug.js";
 import createHandle from "./createHandle.js";
 
-const wishlistFieldsThatShouldNotBeDirectlySet = [
-  "_id",
-  "ancestors",
-  "createdAt",
-  "currentWishlistHash",
-  "parcel",
-  "publishedAt",
-  "publishedWishlistHash",
-  "shopId",
-  "type",
-  "workflow"
-];
+const wishlistFieldsThatShouldNotBeDirectlySet = ["_id", "entries", "createdAt"];
 
-export default async function cleanWishlistInput(context, {
-  currentWishlistHandle,
-  wishlistId,
-  wishlistInput
-}) {
+export default async function cleanWishlistInput(context, { currentWishlistHandle, wishlistId, wishlistInput }) {
   const input = { ...wishlistInput };
 
-  if (typeof input.title === "string" && !currentWishlistHandle && !input.handle) {
-    input.handle = await createHandle(context, getSlug(input.title), wishlistId, shopId);
+  if (typeof input.name === "string" && !currentWishlistHandle && !input.permalink) {
+    input.permalink = await createHandle(context, getSlug(input.name), wishlistId);
   }
 
   wishlistFieldsThatShouldNotBeDirectlySet.forEach((forbiddenField) => {

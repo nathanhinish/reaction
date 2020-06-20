@@ -68,47 +68,132 @@ type ArchiveWishlistsPayload {
   wishlists: [Wishlist]!
 }
 
+input ArchiveWishlistEntriesInput {
+  wishlistEntryIds: [ID]!
+}
+
+type ArchiveWishlistEntriesPayload {
+  clientMutationId: String
+  wishlistEntries: [WishlistEntry]!
+}
+
+input WishlistInput {
+  _id: ID!
+  name: String
+  permalink: String
+  description: String
+  isVisible: Boolean!
+  isArchived: Boolean!
+}
+
+input WishlistEntryInput {
+  _id: ID!
+  productId: ID
+  variantId: ID
+  comment: String
+  priority: WishlistEntryPriority
+  quantityDesired: Int
+  quantityReceived: Int
+  isArchived: Boolean!
+}
+
+input CreateWishlistInput {
+  wishlist: WishlistInput
+}
+
+type CreateWishlistPayload {
+  clientMutationId: String
+  wishlist: Wishlist!
+}
+
+input CreateWishlistEntryInput {
+  wishlistId: ID!
+  entry: WishlistEntryInput
+}
+
+type CreateWishlistEntryPayload {
+  clientMutationId: String
+  entry: WishlistEntry!
+}
+
+input CloneWishlistsInput {
+  wishlistIds: [ID]!
+}
+
+type CloneWishlistsPayload {
+  clientMutationId: String
+  wishlists: [Wishlist]!
+}
+
+input CloneWishlistEntriesInput {
+  clientMutationId: String
+  entryIds: [ID]!
+}
+
+type CloneWishlistEntriesPayload {
+  clientMutationId: String
+  entries: [WishlistEntry]!
+}
+
+input UpdateWishlistInput {
+  wishlist: WishlistInput!
+  wishlistId: ID!
+}
+
+type UpdateWishlistPayload {
+  clientMutationId: String
+  wishlist: Wishlist!
+}
+
+input UpdateWishlistEntryInput {
+  entry: WishlistEntryInput!
+  wishlistId: ID!
+  entryId: ID!
+}
+
+type UpdateWishlistEntryPayload {
+  clientMutationId: String
+  entry: WishlistEntry!
+}
+
+input UpdateWishlistsVisibilityInput {
+  isVisible: Boolean!
+  wishlistIds: [ID]!
+}
+
+type UpdateWishlistsVisibilityPayload {
+  clientMutationId: String
+  updatedCount: Int
+}
+
+
+
 extend type Query {
   wishlist(wishlistId: ID!): Wishlist
 
   wishlists(
     isArchived: Boolean
-
     isVisible: Boolean
-
-    "List of wishlist IDs to filter by"
     wishlistIds: [ID]
-
-    "Regex metch query string"
     query: String
-
-    "Return only results that come after this cursor. Use this with `first` to specify the number of results to return."
     after: ConnectionCursor,
-
-    "Return only results that come before this cursor. Use this with `last` to specify the number of results to return."
     before: ConnectionCursor,
-
-    "Return at most this many results. This parameter may be used with either `after` or `offset` parameters."
     first: ConnectionLimitInt,
-
-    "Return at most this many results. This parameter may be used with the `before` parameter."
     last: ConnectionLimitInt,
-
-    "Return only results that come after the Nth result. This parameter may be used with the `first` parameter."
     offset: Int,
-
-    "Return results sorted in this order"
     sortOrder: SortOrder = desc,
-
-    "By default, wishlists are sorted by createdAt. Set this to sort by one of the other allowed fields"
     sortBy: WishlistSortByField = createdAt
   ): WishlistConnection
 }
 
 extend type Mutation {
-  "Archive wishlists"
-  archiveWishlists(
-    "Mutation input"
-    input: ArchiveWishlistsInput!
-  ): ArchiveWishlistsPayload!
+  archiveWishlists(input: ArchiveWishlistsInput!): ArchiveWishlistsPayload!
+  archiveWishlistEntries(input: ArchiveWishlistEntriesInput!): ArchiveWishlistEntriesPayload!
+  createWishlist(input: CreateWishlistInput!): CreateWishlistPayload!
+  createWishlistEntry(input: CreateWishlistEntryInput!): CreateWishlistEntryPayload!
+  cloneWishlists(input: CloneWishlistsInput!): CloneWishlistsPayload!
+  cloneWishlistEntries(input: CloneWishlistEntriesInput!): CloneWishlistEntriesPayload!
+  updateWishlist(input: UpdateWishlistInput!): UpdateWishlistPayload!
+  updateWishlistEntry(input: UpdateWishlistEntryInput!): UpdateWishlistEntryPayload!
+  updateWishlistsVisibility(input: UpdateWishlistsVisibilityInput!): UpdateWishlistsVisibilityPayload!
 }

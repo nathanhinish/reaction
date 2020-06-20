@@ -1,18 +1,14 @@
-import {  } from "../../xforms/id.js";
+import {} from "../../xforms/id.js";
 
 export default async function createWishlist(_, { input }, context) {
-  const {
-    clientMutationId = null,
-    wishlist: wishlistInput,
-
-  } = input;
+  const { clientMutationId = null, wishlist: wishlistInput } = input;
 
   const wishlist = await context.mutations.createWishlist(context, {
-    wishlist: wishlistInput
+    wishlist: wishlistInput,
   });
 
   return {
     clientMutationId,
-    wishlist
+    wishlist,
   };
 }
