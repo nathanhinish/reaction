@@ -12,16 +12,14 @@
 export default async function wishlist(context, input) {
   const { collections } = context;
   const { Wishlists } = collections;
-  const { wishlistId, shopId } = input;
+  const { wishlistId } = input;
 
-  await context.validatePermissions(
-    `reaction:legacy:wishlists:${wishlistId}`,
-    "read",
-    { shopId }
-  );
+  // await context.validatePermissions(
+  //   `givelist:wishlists:${wishlistId}`,
+  //   "read"
+  // );
 
   return Wishlists.findOne({
-    _id: wishlistId,
-    shopId
+    _id: wishlistId
   });
 }

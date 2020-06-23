@@ -61,7 +61,7 @@ input ArchiveWishlistsInput {
 }
 
 type ArchiveWishlistsPayload {
-  "The same string you sent with the mutation params, for matching mutation calls with their responses"
+  "The same String you sent with the mutation params, for matching mutation calls with their responses"
   clientMutationId: String
 
   "Array of newly archived wishlists"
@@ -78,18 +78,18 @@ type ArchiveWishlistEntriesPayload {
 }
 
 input WishlistInput {
-  _id: ID!
+  _id: String
   name: String
   permalink: String
   description: String
-  isVisible: Boolean!
-  isArchived: Boolean!
+  isVisible: Boolean
+  isArchived: Boolean
 }
 
 input WishlistEntryInput {
-  _id: ID!
-  productId: ID
-  variantId: ID
+  _id: String
+  productId: String
+  variantId: String
   comment: String
   priority: WishlistEntryPriority
   quantityDesired: Int
@@ -117,7 +117,7 @@ type CreateWishlistEntryPayload {
 }
 
 input CloneWishlistsInput {
-  wishlistIds: [ID]!
+  wishlistIds: [String]!
 }
 
 type CloneWishlistsPayload {
@@ -127,7 +127,7 @@ type CloneWishlistsPayload {
 
 input CloneWishlistEntriesInput {
   clientMutationId: String
-  entryIds: [ID]!
+  entryIds: [String]!
 }
 
 type CloneWishlistEntriesPayload {
@@ -137,7 +137,7 @@ type CloneWishlistEntriesPayload {
 
 input UpdateWishlistInput {
   wishlist: WishlistInput!
-  wishlistId: ID!
+  wishlistId: String!
 }
 
 type UpdateWishlistPayload {

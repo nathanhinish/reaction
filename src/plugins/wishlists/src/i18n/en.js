@@ -25,6 +25,14 @@ const common = {
           },
         },
       },
+      wishlistDetail: {
+        title: 'Details'
+      },
+      wishlistDetailEdit: {
+        name: 'Wishlist name',
+        permalink: 'Slug',
+        description: 'Short description'
+      }
     },
   },
 };
