@@ -18,6 +18,12 @@ export default async function register(app) {
     name: "payments-paypal",
     version: pkg.version,
     i18n,
+    collections: {
+      PaypalPaymentRefunds: {
+        name: 'PaypalPaymentRefunds',
+        indexes: []
+      }
+    },
     graphQL: {
       schemas
     },

@@ -1,5 +1,5 @@
 /**
- * @name exampleListRefunds
+ * @name listRefunds
  * @method
  * @summary List refunds
  * @param {Object} context an object containing the per-request state
@@ -7,10 +7,10 @@
  * @returns {Object} refund result
  * @private
  */
-export default async function exampleListRefunds(context, payment) {
+export default async function listRefunds(context, payment) {
   const { transactionId } = payment;
 
-  const refunds = await context.collections.ExampleIOUPaymentRefunds.find({ transactionId }).toArray();
+  const refunds = await context.collections.PaypalPaymentRefunds.find({ transactionId }).toArray();
 
   return refunds.map((refund) => ({
     _id: refund._id,

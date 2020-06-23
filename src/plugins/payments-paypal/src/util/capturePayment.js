@@ -7,6 +7,6 @@
  * @returns {Object} result for capturing a payment
  * @private
  */
-export default function exampleCapturePayment() {
+export default function capturePayment() {
   return { saved: true, response: {} };
 }
