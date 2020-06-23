@@ -16,5 +16,5 @@ extend union PaymentMethodData = PayPalPaymentMethodData
 
 extend enum PaymentMethodName {
   "PayPal payment method"
-  paypal_example
+  paypal
 }
