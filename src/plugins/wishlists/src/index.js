@@ -10,6 +10,8 @@ import {
   WishlistEntry
 } from "./simpleSchemas.js";
 
+console.info(policies);
+
 /**
  * @summary Import and call this function to add this plugin to your API.
  * @param {ReactionAPI} app The ReactionAPI instance
