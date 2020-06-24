@@ -13,13 +13,15 @@ export default async function wishlist(context, input) {
   const { collections } = context;
   const { Wishlists } = collections;
   const { wishlistId } = input;
-
-  // await context.validatePermissions(
-  //   `givelist:wishlists:${wishlistId}`,
-  //   "read"
-  // );
-
-  return Wishlists.findOne({
-    _id: wishlistId
+  const wishlist = await Wishlists.findOne({
+    _id: wishlistId,
   });
+
+  if (!wishlist) {
+    return wishlist;
+  }
+
+  await context.validatePermissions(`givelist:api-plugin-wishlists:wishlists`, "read", { owner: wishlist.owner });
+
+  return wishlist;
 }

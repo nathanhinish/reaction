@@ -23,7 +23,7 @@ type WishlistEntry implements Node {
 type Wishlist implements Node {
   _id: ID!
   entries: [WishlistEntry]!
-  account: Account
+  owner: ID
   name: String
   permalink: String
   description: String

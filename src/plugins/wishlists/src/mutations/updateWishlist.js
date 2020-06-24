@@ -29,15 +29,13 @@ export default async function updateWishlist(context, input) {
   const { Wishlists } = collections;
   const { wishlist: wishlistInput, wishlistId } = input;
 
-  console.info(context);
+  const currentWishlist = await Wishlists.findOne({ _id: wishlistId });
 
   // Check that user has permission to create wishlist
+  await context.validatePermissions(`givelist:api-plugin-wishlists:wishlists`, "update", {
+    owner: currentWishlist.owner,
+  });
 
-  await context.validatePermissions(`givelist:wishlists:${wishlistId}`, "update");
-
-  console.info('here');
-
-  const currentWishlist = await Wishlists.findOne({ _id: wishlistId });
   if (!currentWishlist) throw new ReactionError("not-found", "Wishlist not found");
 
   const updateDocument = await cleanWishlistInput(context, {
@@ -59,7 +57,7 @@ export default async function updateWishlist(context, input) {
   const { value: updatedWishlist } = await Wishlists.findOneAndUpdate(
     {
       _id: wishlistId,
-    asfd},
+    },
     modifier,
     {
       returnOriginal: false,

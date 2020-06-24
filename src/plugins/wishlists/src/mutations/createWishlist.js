@@ -33,6 +33,7 @@ export default async function createWishlist(context, input) {
   const createdAt = new Date();
   const newWishlist = {
     _id: newWishlistId,
+    owner: context.user._id,
     entries: [],
 
     createdAt,

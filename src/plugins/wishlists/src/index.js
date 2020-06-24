@@ -1,16 +1,13 @@
+import ramda from "ramda";
 import pkg from "../package.json";
 import i18n from "./i18n/index.js";
 import mutations from "./mutations/index.js";
-import queries from "./queries/index.js";
 import policies from "./policies.json";
+import queries from "./queries/index.js";
 import resolvers from "./resolvers/index.js";
 import schemas from "./schemas/index.js";
-import {
-  Wishlist,
-  WishlistEntry
-} from "./simpleSchemas.js";
-
-console.info(policies);
+import { Wishlist, WishlistEntry } from "./simpleSchemas.js";
+import hasPermission from "./utils/hasPermission.js";
 
 /**
  * @summary Import and call this function to add this plugin to your API.
@@ -26,22 +23,28 @@ export default async function register(app) {
 
     collections: {
       Wishlists: {
-        name: 'Wishlists',
-        indexes: [
-          [{accounts: 1}, {name: 'w2_accounts'}]
-        ]
-      }
+        name: "Wishlists",
+        indexes: [],
+      },
     },
     graphQL: {
       resolvers,
-      schemas
+      schemas,
     },
     mutations,
     queries,
     policies,
     simpleSchemas: {
       Wishlist,
-      WishlistEntry
-    }
+      WishlistEntry,
+    },
+    functionsByType: {
+      getHasPermissionFunctionForUser: [
+        function wishlistPermissionCheckGen(context) {
+          const hasPermissionCurried = ramda.curryN(3, hasPermission);
+          return hasPermissionCurried(context);
+        },
+      ],
+    },
   });
 }

@@ -1,5 +1,4 @@
 import SimpleSchema from "simpl-schema";
-import { Account } from "@reactioncommerce/api-plugin-accounts/src/simpleSchemas.js";
 
 export const WishlistEntry = new SimpleSchema({
   _id: {
@@ -36,7 +35,7 @@ export const Wishlist = new SimpleSchema({
   },
 
   entries: [WishlistEntry],
-  account: { type: Account, optional: true },
+  owner: { type: Number, optional: true },
 
   createdAt: Date,
   updatedAt: {
